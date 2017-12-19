@@ -1,64 +1,58 @@
 #include <iostream>
-#include <sstream>
-
-using namespace std;
-
-bool read (int & n, float * mas)
-{ 
-  
-  
+ #include <sstream>
+ 
+ using namespace std;
+ 
+ bool read( int &n, int *mas)
+{
   string str;
-   getline(cin,str);
-    istringstream stream(str);
-     bool F = true;
-    
-       for (int i=0;i<n;i++)
-        {
-          if (!(stream >> mas[i])) { F = false; break;}
-        }
-   return F;
+  getline(cin,str);
+  istringstream stream(str);
+  bool f = true;
+   for (int i =0;i<n;i++){
+  if (!(stream >> mas[i])) {f = false; break;}
 }
-void quickSort (float *mas, int left, int right)
- {  int x, i= left , j = right;
-       x = mas[(left+right)/2];
-         
-         do{
-           
-           while ( (mas[i] < x) && (i < right) ) i++;
-           while ( (mas[j] > x) && (j > left ) ) j--;
-           
-          if (i <= j) { swap(mas[i], mas[j]);
-                        i++;
-                        j--;
-          }
-            } while (i <= j);
-           
-      if (left < j) quickSort(mas, left , j);
-      if (right > i) quickSort(mas, right , i);
-      }     
-           
-           
-int main ()
- { 
+return f;
+}
+
+void quick( int *mas, int left, int right){
   
-   float *mas = new float; 
-   int i,n;
-   string str;
-   getline(cin,str);
-   istringstream  stream (str);
+  int i = left, j =right;
+  int x = mas[j];
+  if (right-left>0){
+       while(i<j){
+            if(mas[i]>x && i<j){
+                if (i==j-1){
+                    swap(mas[i],mas[j]);
+                    j--;
+                    
+        }
+        else {swap(mas[j],mas[j-1]);
+              swap(mas[i],mas[j]);
+        }
+      }else i++;
+      
+    } quick(mas,left,j-1);
+      quick(mas,j+1,right);
     
-       if (stream >> n ) {   
-         if ( read (n , mas) ){
-           for (i = 0; i < n; i++) {
-              quickSort(mas, 0, n-1);
-         } }
-   
-   for (i = 0 ; i < n; i++)
-      cout << mas[i] << " ";
-       }
-       
-                else {cout << "An error has occured while reading input data." ; } 
+    
+  }
+}
+
+int main()
+{
+  int *a=new int;
+  int n;
+  string str;
+  getline(cin,str);
+  istringstream stream(str);
+  
+   if (stream >> n) {
+     if (read(n,a)){
+       quick(a,0,n-1);
+     }
+     for (int i = 0;i<n;i++) cout << a[i] << " ";
+     
+   } else cout <<"An error has occured while reading input data.";
    return 0;
- }
-                  
-                  
+}
